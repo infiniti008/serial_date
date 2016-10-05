@@ -1,10 +1,11 @@
 {
   "Arrow" : {
-    "Url" : "https://epscape.com/show/212/the-flash",
+    "Url" : "https://epscape.com/show/10/BigBangTheory",
     "Info" : {
-      "SerialName" : "div.content > div > div > div:nth-child(3) > div.col-8 > div.col-12.next-episode-block > h2",
+      "SeasonInfo" : "div.content > div > div > div:nth-child(3) > div.col-8 > div.col-12.next-episode-block > h2",
       "Time" : "div.content > div > div > div:nth-child(3) > div.col-8 > div.col-12.next-episode-block > p",
-      "EpisodeName" : "div.content > div > div > div:nth-child(3) > div.col-8 > div.col-12.next-episode-block > p > b"
+      "EpisodeName" : "div.content > div > div > div:nth-child(3) > div.col-8 > div.col-12.next-episode-block > p > b",
+      "SerialName" : "div.content > div > div > div:nth-child(2) > div.col-9 > h1"
     }
   }
 }
