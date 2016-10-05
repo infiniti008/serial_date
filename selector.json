@@ -1,0 +1,10 @@
+{
+  "Arrow" : {
+    "Url" : "https://epscape.com/show/212/the-flash",
+    "Info" : {
+      "SerialName" : "div.content > div > div > div:nth-child(3) > div.col-8 > div.col-12.next-episode-block > h2",
+      "Time" : "div.content > div > div > div:nth-child(3) > div.col-8 > div.col-12.next-episode-block > p",
+      "EpisodeName" : "div.content > div > div > div:nth-child(3) > div.col-8 > div.col-12.next-episode-block > p > b"
+    }
+  }
+}

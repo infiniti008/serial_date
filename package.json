@@ -1,0 +1,19 @@
+{
+  "name": "serial_date",
+  "version": "1.0.0",
+  "description": "",
+  "main": "SaveParsed.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/infiniti008/serial_date.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/infiniti008/serial_date/issues"
+  },
+  "homepage": "https://github.com/infiniti008/serial_date#readme"
+}
