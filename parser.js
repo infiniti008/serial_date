@@ -11,14 +11,14 @@ function parseFrom(config, cb){
 		for (var i in config.selectors){
 			res[i] = $(config.selectors[i]).text();
 			if (i == 'SeasonInfo') {
-				var CurrentSeason = {};
-				CurrentSeason.IndexSeason = res[i].match('сезон').index;
-				CurrentSeason.NumberSeason = (res[i].charAt(CurrentSeason.IndexSeason-3) + res[i].charAt(CurrentSeason.IndexSeason-2) + res[i].charAt(CurrentSeason.IndexSeason-1)) * 1;
-				CurrentSeason.IndexEpisode = res[i].match('серия').index;
-				CurrentSeason.NumberEpisode = (res[i].charAt(CurrentSeason.IndexEpisode-3) + res[i].charAt(CurrentSeason.IndexEpisode-2) + res[i].charAt(CurrentSeason.IndexEpisode-1)) * 1;
+				var NextEpisode = {};
+				NextEpisode.IndexSeason = res[i].match('сезон').index;
+				NextEpisode.NumberSeason = (res[i].charAt(NextEpisode.IndexSeason-3) + res[i].charAt(NextEpisode.IndexSeason-2) + res[i].charAt(NextEpisode.IndexSeason-1)) * 1;
+				NextEpisode.IndexEpisode = res[i].match('серия').index;
+				NextEpisode.NumberEpisode = (res[i].charAt(NextEpisode.IndexEpisode-3) + res[i].charAt(NextEpisode.IndexEpisode-2) + res[i].charAt(NextEpisode.IndexEpisode-1)) * 1;
 			}
 		}
-		console.log(CurrentSeason);
+		console.log(NextEpisode);
 		res.create = new Date();
 
 
