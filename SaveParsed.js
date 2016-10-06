@@ -4,8 +4,8 @@ var varriables = require('./varriables.js');
 var nbrb={};
 
 function saveParsed(){
-    parser.parseFrom(varriables.conf, function (res) {
-    	console.log(res);
+    parser.parseFrom(varriables.conf, function (NextEpisode) {
+    	console.log(NextEpisode);
     });
 }
 

@@ -18,11 +18,11 @@ function parseFrom(config, cb){
 				Index.IndexEpisode = res[i].match('серия').index;
 				NextEpisode.NumberEpisode = (res[i].charAt(Index.IndexEpisode-3) + res[i].charAt(Index.IndexEpisode-2) + res[i].charAt(Index.IndexEpisode-1)) * 1;
 			}
-			if (i == 'Time') {
+			else if (i == 'Time') {
 				NextEpisode.Date = (res[i].charAt(0) + res[i].charAt(1)) * 1;
 				Index.IndexYear = res[i].match('201').index;
-				NextEpisode.Year = (res[i].charAt(Index.IndexYear) + res[i].charAt(Index.IndexYear+1) + res[i].charAt(Index.IndexYear+2) + res[i].charAt(Index.IndexYear+3)) * 1;
 				NextEpisode.Month = '';
+				NextEpisode.Year = (res[i].charAt(Index.IndexYear) + res[i].charAt(Index.IndexYear+1) + res[i].charAt(Index.IndexYear+2) + res[i].charAt(Index.IndexYear+3)) * 1;
 				for (var j = 3; j < Index.IndexYear -1; j++) {
 					NextEpisode.Month = NextEpisode.Month + res[i].charAt(j);
 				}
@@ -37,11 +37,11 @@ function parseFrom(config, cb){
 		NextEpisode.Month = month_to.monthToNumber(NextEpisode.Month);
 		NextEpisode.SerialName = res.SerialName;
 		NextEpisode.OriginalName = res.OriginalName;
-		console.log(NextEpisode);
+		// console.log(NextEpisode);
 		res.create = new Date();
 
 
-		cb(res);
+		cb(NextEpisode);
 	});
 }
 
