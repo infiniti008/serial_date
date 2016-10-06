@@ -31,6 +31,11 @@ function startServer(){
       file = file.replace('{{in_div}}', 'Приветствую в интерактивной панели управления оборудованием!');
       res.end(file);
   });
+
+  app.get('/add_url', function(req, res){
+    console.log(req.query.url);
+    SaveParsed.saveParsed(req.query.url);
+  });
 }
 
 
