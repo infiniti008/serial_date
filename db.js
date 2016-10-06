@@ -16,16 +16,18 @@ function create_db (cb) {
     db.serialize(function () {
         db.run("CREATE TABLE if not exists nextepisode (SerialUrl TEXT, SerialName TEXT, OriginalName TEXT, SerialSeason TEXT, NextEpNumber TEXT, NextEpName TEXT, NextEpDay TEXT, NextEpMonth TEXT, NextEpYear TEXT, LastScan TEXT)", function(){
           if (ind == 1) {
-            add_first();
+            add_first(cb);
+          }
+          else if (ind == 0) {
+            cb();
           }
         });
     });
 
 }
 
-
-//Добавление напоминания в базу
-function add_first (){
+//Добавление нули в базу
+function add_first (clb){
     var sqlite3 = require('sqlite3').verbose();
     var data_base = new sqlite3.Database(db_name);
     data_base.serialize(function() {
@@ -34,7 +36,7 @@ function add_first (){
         // console.log(task);
         stmt.finalize();
         delet_from_base(1, function(){
-
+          clb();
         });
     });
     data_base.close();
