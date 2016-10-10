@@ -41,6 +41,14 @@ function startServer(){
       res.end(file);
   });
 
+  app.get('/list_page', function(req, res) {
+      var file = fs.readFileSync('./views/home.html').toString();
+      var list_page = fs.readFileSync('./views/list_page.html').toString();
+      file = file.replace('{{Title}}', 'Добавить сериал');
+      file = file.replace('{{content}}', list_page);
+      res.end(file);
+  });
+
   app.get('/send_url', function(req, res){
     console.log('XMLHttpRequest');
     var new_url = req.query.urle;

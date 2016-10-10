@@ -9,15 +9,10 @@
   height: 50px;
   font-size: 30px;
   font-family:monospace;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 .btn_href:hover{
-  border: 0px;
-  border-radius: 5px;
-  background: #00AF64;
-  width: 512px;
-  height: 50px;
-  font-size: 30px;
-  font-family:monospace;
   box-shadow: 0 0 5px rgba(0,0,0,1);
 }
 /*Добавление сайта в базу*/
@@ -52,6 +47,15 @@
 
 }
 
+.div_add{
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  /*border: 2px solid blue;*/
+  text-align: center;
+}
+
 .div_content_add{
   background-color: #81A9A9;
   margin-left: 30%;
@@ -59,7 +63,7 @@
   margin-top: 10%;
   /*background-color: yellow;*/
   border: 5px solid #7586AC;
-    border-radius: 5px;
+  border-radius: 5px;
 }
 
 .div_content_first{
@@ -73,16 +77,16 @@
   border-radius: 5px;
 }
 
-.div_add{
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 1%;
-  margin-bottom: 1%;
-  /*border: 2px solid blue;*/
-  text-align: center;
+.div_content_list{
+  /*background-color: yellow;*/
+  /*border: 5px solid #7586AC;*/
+  /*background-color: #81A9A9;*/
+  margin-left: 30%;
+  margin-right: 30%;
+  /*margin-top: 10%;*/
+  border: 5px solid #7586AC;
+  border-radius: 5px;
 }
-
-
 
 .div_page{
   /*border: 2px solid red;*/
