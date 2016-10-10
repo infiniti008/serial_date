@@ -49,10 +49,31 @@ function startServer(){
       res.end(file);
   });
 
-  app.get('/send_url', function(req, res){
-    console.log('XMLHttpRequest');
-    var new_url = req.query.urle;
-    SaveParsed.saveParsed(new_url);
+  app.get('/deleteFromBase_page', function(req, res) {
+    var file = fs.readFileSync('./views/home.html').toString();
+    var deleteFromBase_page = fs.readFileSync('./views/deleteFromBase_page.html').toString();
+    file = file.replace('{{Title}}', 'Главная страница');
+    file = file.replace('{{content}}', deleteFromBase_page);
+    res.end(file);
+  });
+
+  app.get('/deleteFromBase', function(req, res) {
+    // console.log(req.query);
+    db.delet_from_base(req.query.id, function(){
+      console.log("after delete");
+    });
+    var file = fs.readFileSync('./views/home.html').toString();
+    var deleteFromBase_page = fs.readFileSync('./views/deleteFromBase_page.html').toString();
+    file = file.replace('{{Title}}', 'Главная страница');
+    file = file.replace('{{content}}', deleteFromBase_page);
+    res.end(file);
+  });
+
+  app.get('/2', function(req, res) {
+    db.insert_from_base('', '', '', function(row){
+      console.log('Извлекли');
+      console.log(row);
+    });
     var file = fs.readFileSync('./views/home.html').toString();
     var first_page = fs.readFileSync('./views/first_page.html').toString();
     file = file.replace('{{Title}}', 'Главная страница');
@@ -60,23 +81,31 @@ function startServer(){
     res.end(file);
   });
 
+  app.get('/send_url', function(req, res){
+    console.log('XMLHttpRequest');
+    var new_url = req.query.urle;
+    SaveParsed.saveParsedDb(new_url);
+    var file = fs.readFileSync('./views/home.html').toString();
+    var first_page = fs.readFileSync('./views/first_page.html').toString();
+    file = file.replace('{{Title}}', 'Главная страница');
+    file = file.replace('{{content}}', first_page);
+    res.end(file);
+  });
+
+//Рабочий
+  // app.get('/send_url', function(req, res){
+  //   console.log('XMLHttpRequest');
+  //   var new_url = req.query.urle;
+  //   SaveParsed.saveParsed(new_url);
+  //   var file = fs.readFileSync('./views/home.html').toString();
+  //   var first_page = fs.readFileSync('./views/first_page.html').toString();
+  //   file = file.replace('{{Title}}', 'Главная страница');
+  //   file = file.replace('{{content}}', first_page);
+  //   res.end(file);
+  // });
+
   // app.get('/add_url', function(req, res){
   //   console.log(req.query.url);
   //   SaveParsed.saveParsed(req.query.url);
   // });
 }
-
-
-
-// app.set('view engine', 'jade');
-// app.set('port', (process.env.OPENSHIFT_NODEJS_PORT || 5000));
-// app.set('ip', (process.env.OPENSHIFT_NODEJS_IP || 'localhost'));
-// app.use('/public', express.static('public'));
-//
-// app.get('/', function (req, res) {
-//   res.render('index', { title: 'Hey', message: 'Hello there!'});
-// });
-
-// app.listen(app.get('port'), app.get('ip'), function() {
-//   console.log('Node app is running on port', app.get('port'));
-// });

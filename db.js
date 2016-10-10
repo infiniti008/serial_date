@@ -42,15 +42,34 @@ function add_first (clb){
     data_base.close();
 }
 
+//Добавление новой за в базу
+function add_next (next, cb){
+  // console.log(next);
+    var sqlite3 = require('sqlite3').verbose();
+    var data_base = new sqlite3.Database(db_name);
+    data_base.serialize(function() {
+        var stmt = data_base.prepare("INSERT INTO nextepisode (SerialUrl, SerialName, OriginalName, SerialSeason, NextEpNumber, NextEpName, NextEpDay, NextEpMonth, NextEpYear, LastScan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        stmt.run(next.Url, next.SerialName, next.OriginalName, next.NumberSeason, next.NumberEpisode, next.NameEpisode, next.Date, next.Month, next.Year, next.LastScan);
+        console.log('Добавили запись в базу');
+        cb();
+        stmt.finalize();
+    });
+    data_base.close();
+}
 
 //Извлечение данных из таблицы
-function insert_from_base(){
+function insert_from_base(stat, param, znach, cb){
+  var where = '';
+  if (stat == 'on') {
+    where = where + "WHERE " + param + "= '" + znach +"'";
+  }
+  console.log(where);
     var sqlite3 = require('sqlite3').verbose();
     var data_base = new sqlite3.Database(db_name);
     data_base.serialize(function () {
-        data_base.all("SELECT rowid AS id, SerialUrl, SerialName, OriginalName, SerialSeason, NextEpNumber, NextEpName, NextEpDay, NextEpMonth, NextEpYear, LastScan FROM nextepisode", function(err, row) {
-            // cb(row);
-            console.log(row);
+        data_base.all("SELECT rowid AS id, SerialUrl, SerialName, OriginalName, SerialSeason, NextEpNumber, NextEpName, NextEpDay, NextEpMonth, NextEpYear, LastScan FROM nextepisode "+ where +"", function(err, row) {
+            cb(row);
+            // console.log(row);
         });
     });
     data_base.close();
@@ -61,7 +80,7 @@ function delet_from_base(id, cb){
     var sqlite3 = require('sqlite3').verbose();
     var data_base = new sqlite3.Database(db_name);
     data_base.serialize(function () {
-        data_base.run("DELETE FROM task WHERE rowid = "+id+"", function (lastID) {
+        data_base.run("DELETE FROM nextepisode WHERE rowid = "+id+"", function (lastID) {
           console.log('Удалили запись с ID = ' + id);
           cb();
         });
@@ -73,5 +92,6 @@ function delet_from_base(id, cb){
 module.exports = {
   create_db : create_db,
   insert_from_base : insert_from_base,
-  delet_from_base : delet_from_base
+  delet_from_base : delet_from_base,
+  add_next : add_next
 }
