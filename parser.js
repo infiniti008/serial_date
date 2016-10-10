@@ -37,10 +37,9 @@ function parseFrom(config, cb){
 		NextEpisode.Month = month_to.monthToNumber(NextEpisode.Month);
 		NextEpisode.SerialName = res.SerialName;
 		NextEpisode.OriginalName = res.OriginalName;
+		NextEpisode.Url = config.uri;
 		// console.log(NextEpisode);
-		res.create = new Date();
-
-
+		// NextEpisode.create = new Date();
 		cb(NextEpisode);
 	});
 }

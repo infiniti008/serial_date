@@ -1,0 +1,15 @@
+<script type="text/javascript">
+  var div_content_add = document.getElementById('div_content');
+  div_content_add.setAttribute("class", "div_content_add");
+</script>
+<div class="div_add">
+  <input type="button" value="Главная страница" class="btn_href" onclick="location.href='/'"><br>
+  <hr class="hr">
+  <form id=delete action="/deleteFromBase" method="get">
+    <br>
+    <label for="delete" class="lbl_new_url">Введите Id записи</label> <br><br>
+    <input type="text" name="id" form="delete" id="delete" size="15" class="inpt_text"> <br><br>
+    <input type="submit" value="Добавить сериал в базу" class="btn_submit">
+  </form>
+
+</div>
