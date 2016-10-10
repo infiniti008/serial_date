@@ -2,8 +2,82 @@
   var div_content_add = document.getElementById('div_content');
   div_content_add.setAttribute("class", "div_content_list");
 </script>
-<div class="div_add">
+<div class="div_add" id="div_add">
   <input type="button" value="Главная страница" class="btn_href" onclick="location.href='/'"><br>
   <hr class="hr">
-
+  <div class="div_list">
+    <div class="div_in_line">
+      Название сериала
+    </div>
+    <div class="div_in_line">
+      Следующая серия
+    </div>
+    <div class="div_in_line">
+      Дата выхода
+    </div>
+    <div class="div_in_line">
+      Название эпизода
+    </div>
+  </div>
 </div>
+
+
+<script>
+  function zapr(){
+    var x = new XMLHttpRequest();
+    x.open("GET", "/get_list", true);
+    x.onload = function (){
+        // alert(x.responseText);
+        // myFunction(x.responseText);
+        repla(x.responseText);
+    }
+    x.send(null);
+  }
+    function repla(response) {
+      // alert('dlfkjvgmdflkvg');
+      var tex = '<div class="div_in_line">\
+          {{name}}\
+        </div>\
+        <div class="div_in_line">\
+          {{next}}\
+        </div>\
+        <div class="div_in_line">\
+          {{date}}\
+        </div>\
+        <div class="div_in_line">\
+          {{episode}}\
+        </div>';
+        // alert(response);
+        var arr = JSON.parse(response);
+        // alert(arr[0]);
+        for (var i = 0; i < arr.length; i++) {
+          if (arr[i].SerialSeason < 10) {
+            arr[i].SerialSeason = '0' + arr[i].SerialSeason;
+          }
+          if (arr[i].NextEpNumber < 10) {
+            arr[i].NextEpNumber = '0' + arr[i].NextEpNumber;
+          }
+          if (arr[i].NextEpDay < 10) {
+            arr[i].NextEpDay = '0' + arr[i].NextEpDay;
+          }
+          if (arr[i].NextEpMonth < 10) {
+            arr[i].NextEpMonth = '0' + arr[i].NextEpMonth;
+          }
+          var newDiv = document.createElement('div');
+          newDiv.className = 'div_list';
+          newDiv.innerHTML = tex;
+          newDiv.innerHTML = newDiv.innerHTML.replace('{{name}}', arr[i].SerialName);
+          newDiv.innerHTML = newDiv.innerHTML.replace('{{next}}', 'S' + arr[i].SerialSeason + 'E' + arr[i].NextEpNumber);
+          newDiv.innerHTML = newDiv.innerHTML.replace('{{date}}', arr[i].NextEpDay + '-' + arr[i].NextEpMonth + '-' + arr[i].NextEpYear);
+          newDiv.innerHTML = newDiv.innerHTML.replace('{{episode}}', arr[i].NextEpName);
+          div_add.appendChild(newDiv);
+
+
+        }
+      }
+
+function load_curr_page(){
+  zapr();
+}
+
+</script>

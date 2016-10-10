@@ -5,7 +5,7 @@
       <link href="style.css" type="text/css" rel="stylesheet">
       <title>{{Title}}</title>
   </head>
-  <body class="body_home">
+  <body class="body_home" onLoad="load_page()">
     <div class="div_page">
       <div id="div_content">
         {{content}}
@@ -13,3 +13,9 @@
     </div>
   </body>
 </html>
+
+<script type="text/javascript">
+  function load_page(){
+    load_curr_page();
+  }
+</script>

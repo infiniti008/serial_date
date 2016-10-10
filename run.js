@@ -70,10 +70,7 @@ function startServer(){
   });
 
   app.get('/2', function(req, res) {
-    db.insert_from_base('', '', '', function(row){
-      console.log('Извлекли');
-      console.log(row);
-    });
+
     var file = fs.readFileSync('./views/home.html').toString();
     var first_page = fs.readFileSync('./views/first_page.html').toString();
     file = file.replace('{{Title}}', 'Главная страница');
@@ -90,6 +87,13 @@ function startServer(){
     file = file.replace('{{Title}}', 'Главная страница');
     file = file.replace('{{content}}', first_page);
     res.end(file);
+  });
+
+  app.get('/get_list', function(req, res) {
+    db.insert_from_base('off', 'id', '1', function(row){
+       res.send(row)
+       console.log(row);
+    });
   });
 
 //Рабочий
