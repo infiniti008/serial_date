@@ -70,10 +70,7 @@ function startServer(){
   });
 
   app.get('/2', function(req, res) {
-    db.insert_from_base('', '', '', function(row){
-      console.log('Извлекли');
-      console.log(row);
-    });
+
     var file = fs.readFileSync('./views/home.html').toString();
     var first_page = fs.readFileSync('./views/first_page.html').toString();
     file = file.replace('{{Title}}', 'Главная страница');
