@@ -3,15 +3,13 @@
   <head>
     <meta charset="UTF-8">
       <link href="style.css" type="text/css" rel="stylesheet">
-      <link href="../public/style.css" type="text/css" rel="stylesheet">
       <title>{{Title}}</title>
   </head>
-  <body>
-    <form id=add_url action="/add_url" method="get">
-      <br>
-      <label for="new_url">Введите ссылку на сериал с ресурса <a href="http://epscape.com/">Escape</a></label> <br><br>
-      <input type="text" name="url" form="add_url" id="new_url" size="50"> <br><br>
-      <input type="submit" value="Добавить сериал в базу">
-    </form>
+  <body class="body_home">
+    <div class="div_page">
+      <div id="div_content">
+        {{content}}
+      </div>
+    </div>
   </body>
 </html>

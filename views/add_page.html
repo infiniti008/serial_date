@@ -1,0 +1,82 @@
+<script type="text/javascript">
+  var div_content_add = document.getElementById('div_content');
+  div_content_add.setAttribute("class", "div_content_add");
+
+  function zapros(urle){
+    var x = new XMLHttpRequest();
+    x.open("GET", "/send_url?urle=" + urle, true);
+    x.send();
+  }
+
+  function incorrect_url(){
+    alert('Неправильный адрес! \n\nВведите корректную ссылку на сериал!');
+  }
+
+  function show_confirm(){
+    var url = document.getElementById('new_url').value;
+    var url_first = '';
+    var url_second = '';
+    var url_number = '';
+    var url_serial = '';
+    for (var i = 0; i < url.length; i++) {
+      if (i < 24) {
+        url_first = url_first + url.charAt(i);
+      }
+      else {
+        url_second  = url_second + url.charAt(i);
+      }
+    }
+    if (url_first != 'http://epscape.com/show/') {
+      incorrect_url();
+    }
+    else {
+      var ind_slash = url_second.match("/").index;
+      for (var i = 0; i < ind_slash; i++) {
+        url_number = url_number + url_second.charAt(i);
+      }
+      if (isNaN(url_number) == true) {
+        incorrect_url();
+      }
+      else {
+        for (var i = url_second.match("/").index + 1; i < url_second.length; i++) {
+          url_serial = url_serial + url_second.charAt(i);
+        }
+        if (url_serial == '') {
+          incorrect_url();
+        }
+        else {
+          var status = '';
+          if (confirm("Вы действительно хотите добавить сериал в базу?")==true) {
+            status = 'yes';
+            zapros(url);
+          } else {
+            status = 'no';
+          }
+
+          // alert('with');
+        }
+      }
+    }
+
+    // var status = '';
+    // if (confirm("Вы действительно хотите добавить сериал в базу?")==true) {
+    //   status = 'yes';
+    // } else {
+    //   status = 'no';
+    // }
+
+    // alert('status= ' + url_second.match("/").index);
+  }
+</script>
+<div class="div_add">
+  <input type="button" value="Главная страница" class="btn_href" onclick="location.href='/'"><br>
+  <hr class="hr">
+  <form id=add_url method="get">
+    <br>
+    <label for="new_url" class="lbl_new_url">Введите ссылку на сериал с ресурса <a href="http://epscape.com/">Escape.com</a></label> <br><br>
+    <input type="text" name="url" form="add_url" id="new_url" size="50" class="inpt_text"> <br><br>
+    <input type="submit" value="Добавить сериал в базу" class="btn_submit" onclick="show_confirm()">
+  </form>
+</div>
+
+<!-- action="/add_url" -->

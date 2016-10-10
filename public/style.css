@@ -1,0 +1,89 @@
+.body_home{
+  background-image: url(body.jpg);
+}
+.btn_href{
+  border: 0px;
+  border-radius: 5px;
+  background: #00AF64;
+  width: 512px;
+  height: 50px;
+  font-size: 30px;
+  font-family:monospace;
+}
+.btn_href:hover{
+  border: 0px;
+  border-radius: 5px;
+  background: #00AF64;
+  width: 512px;
+  height: 50px;
+  font-size: 30px;
+  font-family:monospace;
+  box-shadow: 0 0 5px rgba(0,0,0,1);
+}
+/*Добавление сайта в базу*/
+.hr{
+  width: 512px;
+  border: none; /* Убираем границу */
+  background-color: #273C3C; /* Цвет линии */
+  height: 2px; /* Толщина линии */
+}
+
+.inpt_text{
+  font-size: 18px;
+  font-family:monospace;
+}
+
+.btn_submit{
+  border: 0px;
+  border-radius: 5px;
+  background: #00AF64;
+  width: 512px;
+  height: 50px;
+  font-size: 30px;
+  font-family:monospace;
+}
+.btn_submit:hover{
+    box-shadow: 0 0 5px rgba(0,0,0,1);
+}
+
+.lbl_new_url{
+  font-size: 20px;
+  font-family:monospace;
+
+}
+
+.div_content_add{
+  background-color: #81A9A9;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-top: 10%;
+  /*background-color: yellow;*/
+  border: 5px solid #7586AC;
+    border-radius: 5px;
+}
+
+.div_content_first{
+  /*background-color: yellow;*/
+  /*border: 5px solid #7586AC;*/
+  /*background-color: #81A9A9;*/
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-top: 10%;
+  border: 5px solid #7586AC;
+  border-radius: 5px;
+}
+
+.div_add{
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  /*border: 2px solid blue;*/
+  text-align: center;
+}
+
+
+
+.div_page{
+  /*border: 2px solid red;*/
+}

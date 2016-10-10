@@ -27,15 +27,35 @@ function startServer(){
   //Главная страница
   app.get('/', function(req, res) {
       var file = fs.readFileSync('./views/home.html').toString();
+      var first_page = fs.readFileSync('./views/first_page.html').toString();
       file = file.replace('{{Title}}', 'Главная страница');
-      file = file.replace('{{in_div}}', 'Приветствую в интерактивной панели управления оборудованием!');
+      file = file.replace('{{content}}', first_page);
       res.end(file);
   });
 
-  app.get('/add_url', function(req, res){
-    console.log(req.query.url);
-    SaveParsed.saveParsed(req.query.url);
+  app.get('/add_page', function(req, res) {
+      var file = fs.readFileSync('./views/home.html').toString();
+      var add_page = fs.readFileSync('./views/add_page.html').toString();
+      file = file.replace('{{Title}}', 'Добавить сериал');
+      file = file.replace('{{content}}', add_page);
+      res.end(file);
   });
+
+  app.get('/send_url', function(req, res){
+    console.log('XMLHttpRequest');
+    var new_url = req.query.urle;
+    SaveParsed.saveParsed(new_url);
+    var file = fs.readFileSync('./views/home.html').toString();
+    var first_page = fs.readFileSync('./views/first_page.html').toString();
+    file = file.replace('{{Title}}', 'Главная страница');
+    file = file.replace('{{content}}', first_page);
+    res.end(file);
+  });
+
+  // app.get('/add_url', function(req, res){
+  //   console.log(req.query.url);
+  //   SaveParsed.saveParsed(req.query.url);
+  // });
 }
 
 
