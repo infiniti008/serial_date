@@ -92,6 +92,13 @@ function startServer(){
     res.end(file);
   });
 
+  app.get('/get_list', function(req, res) {
+    db.insert_from_base('off', 'id', '1', function(row){
+       res.send(row)
+       console.log(row);
+    });
+  });
+
 //Рабочий
   // app.get('/send_url', function(req, res){
   //   console.log('XMLHttpRequest');
