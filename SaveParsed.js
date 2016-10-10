@@ -15,14 +15,21 @@ function saveParsed(url){
 
 //Дробавление в базу
 function saveParsedDb(url){
-  db.insert_from_base();
-  // var configure = varriables.changeUrlInConf(url);
-  // parser.parseFrom(configure, function (NextEpisode) {
-  // 	// console.log(NextEpisode);
-  //   db.add_next(NextEpisode, function(){
-  //     db.insert_from_base();
-  //   });
-  // });
+  // db.insert_from_base();
+  var configure = varriables.changeUrlInConf(url);
+  parser.parseFrom(configure, function (NextEpisode) {
+  	// console.log(NextEpisode);
+    db.insert_from_base('on', 'SerialName', NextEpisode.SerialName, function(row){
+      if (row == '') {
+        console.log('Нет совпадений');
+        db.add_next(NextEpisode);
+      }
+      else {
+        console.log('Есть совпадение');
+      }
+    });
+
+  });
 }
 module.exports = {
     saveParsed: saveParsed,

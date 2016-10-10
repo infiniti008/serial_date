@@ -49,8 +49,8 @@ function add_next (next, cb){
     var data_base = new sqlite3.Database(db_name);
     data_base.serialize(function() {
         var stmt = data_base.prepare("INSERT INTO nextepisode (SerialUrl, SerialName, OriginalName, SerialSeason, NextEpNumber, NextEpName, NextEpDay, NextEpMonth, NextEpYear, LastScan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        stmt.run(next.url, next.SerialName, next.OriginalName, next.NumberSeason, next.NumberEpisode, next.NameEpisode, next.Date, next.Month, next.Year, next.LastScan);
-        // console.log(task);
+        stmt.run(next.Url, next.SerialName, next.OriginalName, next.NumberSeason, next.NumberEpisode, next.NameEpisode, next.Date, next.Month, next.Year, next.LastScan);
+        console.log('Добавили запись в базу');
         cb();
         stmt.finalize();
     });
@@ -58,12 +58,17 @@ function add_next (next, cb){
 }
 
 //Извлечение данных из таблицы
-function insert_from_base(cb){
+function insert_from_base(stat, param, znach, cb){
+  var where = '';
+  if (stat == 'on') {
+    where = where + "WHERE " + param + "= '" + znach +"'";
+  }
+  console.log(where);
     var sqlite3 = require('sqlite3').verbose();
     var data_base = new sqlite3.Database(db_name);
     data_base.serialize(function () {
-        data_base.all("SELECT rowid AS id, SerialUrl, SerialName, OriginalName, SerialSeason, NextEpNumber, NextEpName, NextEpDay, NextEpMonth, NextEpYear, LastScan FROM nextepisode", function(err, row) {
-            // cb(row);
+        data_base.all("SELECT rowid AS id, SerialUrl, SerialName, OriginalName, SerialSeason, NextEpNumber, NextEpName, NextEpDay, NextEpMonth, NextEpYear, LastScan FROM nextepisode "+ where +"", function(err, row) {
+            cb(row);
             console.log(row);
         });
     });

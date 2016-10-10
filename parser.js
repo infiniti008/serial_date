@@ -38,7 +38,7 @@ function parseFrom(config, cb){
 		NextEpisode.SerialName = res.SerialName;
 		NextEpisode.OriginalName = res.OriginalName;
 		NextEpisode.Url = config.uri;
-		// console.log(NextEpisode);
+		console.log(NextEpisode);
 		// NextEpisode.create = new Date();
 		cb(NextEpisode);
 	});

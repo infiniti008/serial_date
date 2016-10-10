@@ -58,7 +58,7 @@ function startServer(){
   });
 
   app.get('/deleteFromBase', function(req, res) {
-    console.log(req.query);
+    // console.log(req.query);
     db.delet_from_base(req.query.id, function(){
       console.log("after delete");
     });
@@ -70,7 +70,7 @@ function startServer(){
   });
 
   app.get('/2', function(req, res) {
-    db.insert_from_base();
+    db.insert_from_base('on', 'id', '1');
     var file = fs.readFileSync('./views/home.html').toString();
     var first_page = fs.readFileSync('./views/first_page.html').toString();
     file = file.replace('{{Title}}', 'Главная страница');
