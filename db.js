@@ -69,7 +69,7 @@ function insert_from_base(stat, param, znach, cb){
     data_base.serialize(function () {
         data_base.all("SELECT rowid AS id, SerialUrl, SerialName, OriginalName, SerialSeason, NextEpNumber, NextEpName, NextEpDay, NextEpMonth, NextEpYear, LastScan FROM nextepisode "+ where +"", function(err, row) {
             cb(row);
-            console.log(row);
+            // console.log(row);
         });
     });
     data_base.close();

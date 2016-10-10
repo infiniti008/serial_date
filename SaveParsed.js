@@ -22,7 +22,9 @@ function saveParsedDb(url){
     db.insert_from_base('on', 'SerialName', NextEpisode.SerialName, function(row){
       if (row == '') {
         console.log('Нет совпадений');
-        db.add_next(NextEpisode);
+        db.add_next(NextEpisode, function(){
+          console.log('Добавили добавили');
+        });
       }
       else {
         console.log('Есть совпадение');
