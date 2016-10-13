@@ -89,9 +89,23 @@ function delet_from_base(id, cb){
 }
 
 
+//Обновление новой за в базу
+function update_to_base(id, next, cb){
+    var sqlite3 = require('sqlite3').verbose();
+    var data_base = new sqlite3.Database(db_name);
+    data_base.serialize(function () {
+      data_base.run("UPDATE nextepisode SET SerialSeason = ?, NextEpNumber = ?, NextEpName = ?, NextEpDay = ?, NextEpMonth = ?, NextEpYear = ?, LastScan = ? WHERE rowid = ?", next.NumberSeason, next.NumberEpisode, next.NameEpisode, next.Date, next.Month, next.Year, next.LastScan, id);
+      cb();
+    });
+    data_base.close();
+}
+
+
+
 module.exports = {
   create_db : create_db,
   insert_from_base : insert_from_base,
   delet_from_base : delet_from_base,
-  add_next : add_next
+  add_next : add_next,
+  update_to_base : update_to_base
 }

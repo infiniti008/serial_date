@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/infiniti008/serial_date/issues"
   },
-  "homepage": "https://github.com/infiniti008/serial_date#readme"
+  "homepage": "https://github.com/infiniti008/serial_date#readme",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.24.0"
+  }
 }

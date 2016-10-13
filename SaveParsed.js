@@ -33,7 +33,34 @@ function saveParsedDb(url){
 
   });
 }
+
+function auto_scan(){
+  var i = 0;
+  db.insert_from_base('off', '', '', function(row){
+    // console.log(row);
+    j = row.length;
+    add_i();
+    function add_i(){
+      if (i < j) {
+        var configure = varriables.changeUrlInConf(row[i].SerialUrl);
+        var id = row[i].id;
+        console.log(id);
+        parser.parseFrom(configure, function (NextEpisode) {
+          // console.log(NextEpisode);
+          db.update_to_base(id, NextEpisode, function(){
+            console.log('Update id ' + id + ' success');
+            i=i+1;
+            add_i();
+          });
+        });
+      }
+    }
+  });
+
+}
+
 module.exports = {
     saveParsed: saveParsed,
-    saveParsedDb : saveParsedDb
+    saveParsedDb : saveParsedDb,
+    auto_scan : auto_scan
 }
