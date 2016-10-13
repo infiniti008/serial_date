@@ -5,7 +5,7 @@ var fs = require('fs');
 var SaveParsed = require('./SaveParsed');
 var varriables = require('./varriables.js')
 var db = require('./db.js')
-var telegram = require('./telegramm.js');
+var telegram = require('./bot_telegramm/telegramm.js');
 var port = 3000;
 
 // Создание базы, добавление в нее первой строчки с нулевыми значениями и моментальное ее удаление
