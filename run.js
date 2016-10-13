@@ -13,7 +13,7 @@ db.create_db(function(){
   startServer();
 });
 
-// telegram.new_message();
+  telegram.new_message();
 
 
 // db.insert_from_base();
@@ -95,7 +95,8 @@ function startServer(){
   app.get('/get_list', function(req, res) {
     db.insert_from_base('off', 'id', '1', function(row){
        res.send(row)
-       console.log(row);
+      //  console.log(row);
+      console.log('Сканировали базу, отправили данные на сайт!');
     });
   });
 
