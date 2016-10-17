@@ -12,7 +12,7 @@ function parseFrom(config, cb){
 		var stat = $("div.col-12.next-episode-block > h2").text();
 		if (!stat) {
 			var status = 'Информации о следующем эпизоде нет';
-			console.log('Информации о следующем эпизоде нет');
+			// console.log('Информации о следующем эпизоде нет');
 			cb(NextEpisode, status);
 		}
 		else {

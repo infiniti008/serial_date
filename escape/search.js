@@ -11,7 +11,7 @@ function parseFrom(cb){
     if (!error) {
             var $ = cheerio.load(body);
             var serial = [];
-            for (var i = 2; i < 252; i++) {
+            for (var i = 2; i < 5; i++) {
               var ser = {};
               ser.href = '';
               var hr = $("tr:nth-child(" + i + ") > td.td-show-name").html();
@@ -27,7 +27,7 @@ function parseFrom(cb){
                 cb(serial);
               }
             }
-            // console.log(serial);
+            console.log(serial);
         } else {
             console.log("Произошла ошибка: " + error);
         }

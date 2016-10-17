@@ -31,15 +31,17 @@ function saveParsedDb(url, cb){
           db.add_next(NextEpisode, function(){
             // console.log('Добавили добавили');
           });
-          cb(st, vb);
+          cb(st, vb, url);
         }
         else {
           vb = 'yes';
           console.log('Есть совпадение');
-          cb(st, vb);
+          cb(st, vb, url);
         }
-
       });
+    }
+    else {
+      cb(st, vb, 'no');
     }
 
   });

@@ -84,7 +84,7 @@ function startServer(){
   app.get('/send_url', function(req, res){
     console.log('XMLHttpRequest');
     var new_url = req.query.urle;
-    SaveParsed.saveParsedDb(new_url, function(stat, vb){
+    SaveParsed.saveParsedDb(new_url, function(stat, vb, row){
       console.log(stat);
     });
     var file = fs.readFileSync('./views/home.html').toString();

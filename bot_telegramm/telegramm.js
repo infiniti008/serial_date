@@ -7,6 +7,9 @@ var SaveParsed = require('../SaveParsed.js');
 var show_later = 0;
 var show_info = 0;
 var serial_current;
+var add = 0;
+var after_add = {};
+after_add.check = 0;
 
 var token = '268377689:AAEehpljdqiY6qITewLNPUkbe60Kbszl95w';
 // Setup polling way
@@ -25,30 +28,56 @@ bot.onText(/\/echo (.+)/, function (msg, match) {
 });
 
 bot.onText(/\/add/, function (msg, match) {
+  add = 1;
   var fromId = msg.from.id;
   console.log('Добавить сериал в базу');
-  bot.sendMessage(fromId, "Отправте мне ссылку не страницу сериала на ресурсе Escape.com \nСсылка должна быть вида 'http://epscape.com/show/148/Revolution'");
+  bot.sendMessage(fromId, "Отправте мне ссылку на страницу сериала на ресурсе Escape.com \nСсылка должна быть вида 'http://epscape.com/show/148/Revolution'");
 });
 
 bot.onText(/http:\/\/epscape.com\/show/, function (msg, match) {
   var fromId = msg.from.id;
-  // console.log('Добавили в базу');
-  console.log(msg.text);
-  SaveParsed.saveParsedDb(msg.text, function(stat, vb){
-    if (stat == 'Информация о следующем эпизоде есть') {
-      bot.sendMessage(fromId, stat);
-      if (vb == 'no') {
-        bot.sendMessage(fromId, 'Мы добавили ваш сериал к нам в базу');
+  if (add == 1) {
+    add = 0;
+    // console.log('Добавили в базу');
+    console.log(msg.text);
+    SaveParsed.saveParsedDb(msg.text, function(stat, vb, url){
+      console.log(url);
+      after_add.url = url;
+      after_add.check = 1;
+      if (stat == 'Информация о следующем эпизоде есть') {
+        if (vb == 'no') {
+          bot.sendMessage(fromId, 'Мы добавили ваш сериал к нам в базу');
+        }
+        else if (vb == 'yes') {
+          bot.sendMessage(fromId, 'Такой сериал уже есть в нашей базе');
+        }
+        bot.sendMessage(fromId, 'Отправьте /show_add\nДля получения информации о добавленном сериале\n' + url + '');
       }
-      else if (vb == 'yes') {
-        bot.sendMessage(fromId, 'Такой сериал уже есть в нашей базе');
+      else {
+        bot.sendMessage(fromId, stat);
       }
-    }
-    else {
-      bot.sendMessage(fromId, stat);
-    }
-  });
+    });
+  }
+  else {
+    bot.sendMessage(fromId, 'Для добавления сериала отправьте /add');
+  }
 });
+
+
+bot.onText(/\/show_add/, function (msg, match) {
+  var fromId = msg.from.id;
+  console.log('Показать информацию о добавленном сериале ' + after_add.url);
+
+  if (after_add.check == 1) {
+    bot.sendMessage(fromId, "ыкуекпвапвапвап");
+    after_add.check = 0;
+    // db.insert_from_base('on', 'SerialUrl',   after_add.url, function(row){
+  }
+
+
+
+});
+
 
 bot.onText(/\/help/, function (msg, match) {
   var fromId = msg.from.id;
