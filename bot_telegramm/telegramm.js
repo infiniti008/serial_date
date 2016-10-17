@@ -4,7 +4,7 @@ var db = require('../db.js');
 var show = require('./show.js');
 var SaveParsed = require('../SaveParsed.js');
 
-var show_later;
+var show_later = 0;
 var show_info = 0;
 var serial_current;
 
@@ -27,20 +27,33 @@ bot.onText(/\/echo (.+)/, function (msg, match) {
 bot.onText(/\/add/, function (msg, match) {
   var fromId = msg.from.id;
   console.log('Добавить сериал в базу');
+  bot.sendMessage(fromId, "Отправте мне ссылку не страницу сериала на ресурсе Escape.com \nСсылка должна быть вида 'http://epscape.com/show/148/Revolution'");
 });
 
 bot.onText(/http:\/\/epscape.com\/show/, function (msg, match) {
   var fromId = msg.from.id;
-  console.log('Добавили в базу');
-  bot.sendMessage(fromId, 'Добавили в базу');
+  // console.log('Добавили в базу');
   console.log(msg.text);
-  SaveParsed.saveParsedDb(msg.text);
+  SaveParsed.saveParsedDb(msg.text, function(stat, vb){
+    if (stat == 'Информация о следующем эпизоде есть') {
+      bot.sendMessage(fromId, stat);
+      if (vb == 'no') {
+        bot.sendMessage(fromId, 'Мы добавили ваш сериал к нам в базу');
+      }
+      else if (vb == 'yes') {
+        bot.sendMessage(fromId, 'Такой сериал уже есть в нашей базе');
+      }
+    }
+    else {
+      bot.sendMessage(fromId, stat);
+    }
+  });
 });
 
 bot.onText(/\/help/, function (msg, match) {
   var fromId = msg.from.id;
   var help = fs.readFileSync('./bot_telegramm/help.txt').toString();
-  console.log(msg);
+  // console.log(msg);
   bot.sendMessage(fromId, help);
   console.log('Показать справку');
 });
@@ -51,6 +64,7 @@ bot.onText(/\/show_serial/, function (msg, match) {
   show.show_list(msg, match, bot, function(ser_curr){
     show_info = 1;
     serial_current = ser_curr;
+    bot.sendMessage(fromId, 'Выберите сериал из текущего сообщения\nили отправьте /show_serial для получения других сериалов');
     // console.log(serial_current);
   });
 });

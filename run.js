@@ -84,7 +84,9 @@ function startServer(){
   app.get('/send_url', function(req, res){
     console.log('XMLHttpRequest');
     var new_url = req.query.urle;
-    SaveParsed.saveParsedDb(new_url);
+    SaveParsed.saveParsedDb(new_url, function(stat, vb){
+      console.log(stat);
+    });
     var file = fs.readFileSync('./views/home.html').toString();
     var first_page = fs.readFileSync('./views/first_page.html').toString();
     file = file.replace('{{Title}}', 'Главная страница');

@@ -14,24 +14,37 @@ function saveParsed(url){
 }
 
 //Дробавление в базу
-function saveParsedDb(url){
+function saveParsedDb(url, cb){
+  var st;
+  var vb;
   // db.insert_from_base();
   var configure = varriables.changeUrlInConf(url);
-  parser.parseFrom(configure, function (NextEpisode) {
+  parser.parseFrom(configure, function (NextEpisode, stat) {
   	// console.log(NextEpisode);
-    db.insert_from_base('on', 'SerialName', NextEpisode.SerialName, function(row){
-      if (row == '') {
-        console.log('Нет совпадений');
-        db.add_next(NextEpisode, function(){
-          console.log('Добавили добавили');
-        });
-      }
-      else {
-        console.log('Есть совпадение');
-      }
-    });
+    // console.log(stat);
+    st = stat;
+    if (stat == 'Информация о следующем эпизоде есть') {
+      db.insert_from_base('on', 'SerialName', NextEpisode.SerialName, function(row){
+        if (row == '') {
+          vb = 'no';
+          console.log('Нет совпадений');
+          db.add_next(NextEpisode, function(){
+            // console.log('Добавили добавили');
+          });
+          cb(st, vb);
+        }
+        else {
+          vb = 'yes';
+          console.log('Есть совпадение');
+          cb(st, vb);
+        }
+
+      });
+    }
 
   });
+
+
 }
 
 function auto_scan(){

@@ -10,7 +10,14 @@ function show_list(msg, match, bot, cb){
   var serial_current = {};
   db.insert_from_base('off', '', '', function(row){
     // console.log(row);
-    for (var i = 0; i < row.length; i++) {
+    var j;
+    if (row.length > 5) {
+      j = 5;
+    }
+    else {
+      j = row.length;
+    }
+    for (var i = 0; i < j; i++) {
       serial_current[i] = row[i];
       bot.sendMessage(fromId, serial + i + ' ' + row[i].SerialName);
     }

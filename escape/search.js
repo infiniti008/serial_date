@@ -1,5 +1,6 @@
 var request = require('request');
 var cheerio = require("cheerio");
+var SaveParsed = require('../SaveParsed.js');
 
 parseFrom(function(list){
   console.log(list);
