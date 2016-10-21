@@ -4,10 +4,13 @@ var db = require('../db.js');
 var show = require('./show.js');
 var SaveParsed = require('../SaveParsed.js');
 
+var user = {};
+user.add = {};
+
 var show_later = 0;
 var show_info = 0;
 var serial_current;
-var add = 0;
+// var add = 0;
 var after_add = {};
 after_add.check = 0;
 
@@ -24,20 +27,29 @@ bot.onText(/\/echo (.+)/, function (msg, match) {
   var fromId = msg.from.id;
   var resp = match[1];
   console.log('Эхо сообщение');
+  console.log(msg);
   bot.sendMessage(fromId, resp);
 });
 
+// bot.onText(/\/add/, function (msg, match) {
+//   add = 1;
+//   var fromId = msg.from.id;
+//   console.log('Добавить сериал в базу');
+//   bot.sendMessage(fromId, "Отправте мне ссылку на страницу сериала на ресурсе Epscape.com \nСсылка должна быть вида 'http://epscape.com/show/Number/SerialName'");
+// });
+
 bot.onText(/\/add/, function (msg, match) {
-  add = 1;
   var fromId = msg.from.id;
+  user.add[fromId] = 1;
   console.log('Добавить сериал в базу');
   bot.sendMessage(fromId, "Отправте мне ссылку на страницу сериала на ресурсе Epscape.com \nСсылка должна быть вида 'http://epscape.com/show/Number/SerialName'");
 });
 
+
 bot.onText(/http:\/\/epscape.com\/show/, function (msg, match) {
   var fromId = msg.from.id;
-  if (add == 1) {
-    add = 0;
+  if (user.add[fromId] == 1) {
+    user.add[fromId] = 0;
     // console.log('Добавили в базу');
     console.log(msg.text);
     SaveParsed.saveParsedDb(msg.text, function(stat, vb, url){
@@ -160,6 +172,7 @@ bot.onText(/\/serial_(.+)/, function (msg, match) {
 bot.on('message', function (msg) {
   var chatId = msg.chat.id;
   var fromId = msg.from.id;
+  to_nuul(fromId);
   var first_four = '';
   first_four = first_four + msg.text.charAt(0) + msg.text.charAt(1) + msg.text.charAt(2) + msg.text.charAt(3);
   console.log(first_four);
@@ -197,6 +210,15 @@ bot.on('message', function (msg) {
 });
 
 }
+
+function to_nuul(fromId){
+  if (user.add[fromId] == undefined){
+    user.add[fromId] = 0;
+    console.log(user);
+  }
+}
+
+
 module.exports = {
   new_message : new_message
 }
