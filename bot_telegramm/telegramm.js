@@ -105,30 +105,30 @@ bot.onText(/\/help/, function (msg, match) {
 bot.onText(/\/show_serial/, function (msg, match) {
   var fromId = msg.from.id;
   if (show_info == 0 || show_info == 2) {
-    show.show_list(msg, match, bot, function(ser_curr){
+    show.show_list(msg, match, bot, function(ser_curr, str){
       show_info = 1;
       serial_current = ser_curr;
-      bot.sendMessage(fromId, 'Выберите сериал из текущего сообщения\nили отправьте /show_serial для получения других сериалов');
+      bot.sendMessage(fromId, str);
       // console.log(serial_current);
     });
   }
   else if (serial_current.length == 5){
     console.log('dfgdfgdfgdgf');
     console.log(serial_current[4].id);
-    show.show_list_next(msg, match, bot, serial_current[4].id, function(ser_curr){
+    show.show_list_next(msg, match, bot, serial_current[4].id, function(ser_curr,str){
       show_info = 1;
       serial_current = ser_curr;
-      bot.sendMessage(fromId, 'Выберите сериал из текущего сообщения\nили отправьте /show_serial для получения других сериалов');
+      bot.sendMessage(fromId, str);
       // console.log(serial_current);
     });
   }
   else {
-    console.log('dfgdfgdfgdgf');
+    // console.log('dfgdfgdfgdgf');
     console.log(serial_current[4].id);
-    show.show_list_next(msg, match, bot, serial_current[4].id, function(ser_curr){
+    show.show_list_next(msg, match, bot, serial_current[4].id, function(ser_curr, str){
       show_info = 2;
       serial_current = ser_curr;
-      bot.sendMessage(fromId, 'Список сериалов закончился! Начните поиск сначала использкю /show_serial\nили добавьте сериал с помощью команды /add');
+      bot.sendMessage(fromId, str);
       // console.log(serial_current);
     });
   }
@@ -138,7 +138,7 @@ bot.onText(/\/serial_(.+)/, function (msg, match) {
   var fromId = msg.from.id;
   if (show_info != 0) {
     var ind = msg.text.charAt(8);
-    var resp = 'Следующая, {{episode}}-ая серия, {{season}}-го сезона\nСериала "{{SerialName}}"\nВыходит {{day}}-{{month}}-{{year}}\nИ называется "{{epname}}""';
+    var resp = 'Следующая, {{episode}}-ая серия, {{season}}-го сезона\nСериала "{{SerialName}}"\nВыходит {{day}}-{{month}}-{{year}}\nИ называется "{{epname}}"{{additional}}';
     resp = resp.replace('{{SerialName}}', serial_current[ind].SerialName);
     resp = resp.replace('{{season}}', serial_current[ind].SerialSeason);
     resp = resp.replace('{{episode}}', serial_current[ind].NextEpNumber);
@@ -146,8 +146,10 @@ bot.onText(/\/serial_(.+)/, function (msg, match) {
     resp = resp.replace('{{day}}', serial_current[ind].NextEpDay);
     resp = resp.replace('{{month}}', serial_current[ind].NextEpMonth);
     resp = resp.replace('{{year}}', serial_current[ind].NextEpYear);
+    resp = resp.replace('{{additional}}', '\n\nВы можете начать новый поиск используя /show_serial\nИли воспользуйтесь /help');
     bot.sendMessage(fromId, resp);
     show_info = 0;
+    // bot.sendMessage(fromId, 'Начните новый поиск используя /show_serial');
   }
   else {
     bot.sendMessage(fromId, 'Сначала выберите /show_serial');
@@ -158,13 +160,21 @@ bot.onText(/\/serial_(.+)/, function (msg, match) {
 bot.on('message', function (msg) {
   var chatId = msg.chat.id;
   var fromId = msg.from.id;
+  var first_four = '';
+  first_four = first_four + msg.text.charAt(0) + msg.text.charAt(1) + msg.text.charAt(2) + msg.text.charAt(3);
+  console.log(first_four);
   if (msg.text.charAt(0) == '/') {
     console.log('Получили сервисное сообщение: ' + msg.text);
     // bot.sendMessage(chatId, 'Мы получили Ваш сервисное сообщение');
   }
+  else if (first_four == 'http') {
+    console.log('Получили ссылку');
+    bot.sendMessage(chatId, 'Мы получили Вашу ссылку');
+  }
+
   else if (msg.text.charAt(0) != '/') {
     console.log('Получили текст');
-    bot.sendMessage(chatId, 'Попробуйте что-нибудь из этого');
+    bot.sendMessage(fromId, 'Попробуйте что-нибудь из этого');
     var help = fs.readFileSync('./bot_telegramm/help.txt').toString();
     // console.log(msg);
     bot.sendMessage(fromId, help);
