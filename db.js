@@ -75,6 +75,24 @@ function insert_from_base(stat, param, znach, cb){
     data_base.close();
 }
 
+//Извлечение данных из таблицы для телеграмма
+function insert_from_base_to_telegramm(id, cb){
+  var where = 'WHERE rowid > ' + id + ' LIMIT 5';
+  console.log(where);
+    var sqlite3 = require('sqlite3').verbose();
+    var data_base = new sqlite3.Database(db_name);
+    data_base.serialize(function () {
+        data_base.all("SELECT rowid AS id, SerialUrl, SerialName, OriginalName, SerialSeason, NextEpNumber, NextEpName, NextEpDay, NextEpMonth, NextEpYear, LastScan FROM nextepisode "+ where +"", function(err, row) {
+            cb(row);
+            // console.log(row);
+        });
+    });
+    data_base.close();
+}
+
+
+
+
 //Удаление из базы
 function delet_from_base(id, cb){
     var sqlite3 = require('sqlite3').verbose();
@@ -89,9 +107,24 @@ function delet_from_base(id, cb){
 }
 
 
+//Обновление новой за в базу
+function update_to_base(id, next, cb){
+    var sqlite3 = require('sqlite3').verbose();
+    var data_base = new sqlite3.Database(db_name);
+    data_base.serialize(function () {
+      data_base.run("UPDATE nextepisode SET SerialSeason = ?, NextEpNumber = ?, NextEpName = ?, NextEpDay = ?, NextEpMonth = ?, NextEpYear = ?, LastScan = ? WHERE rowid = ?", next.NumberSeason, next.NumberEpisode, next.NameEpisode, next.Date, next.Month, next.Year, next.LastScan, id);
+      cb();
+    });
+    data_base.close();
+}
+
+
+
 module.exports = {
   create_db : create_db,
   insert_from_base : insert_from_base,
   delet_from_base : delet_from_base,
-  add_next : add_next
+  add_next : add_next,
+  update_to_base : update_to_base,
+  insert_from_base_to_telegramm : insert_from_base_to_telegramm
 }

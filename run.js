@@ -5,12 +5,16 @@ var fs = require('fs');
 var SaveParsed = require('./SaveParsed');
 var varriables = require('./varriables.js')
 var db = require('./db.js')
+var telegram = require('./bot_telegramm/telegramm.js');
+// var search = require('./escape/search.js');
 var port = 3000;
 
 // Создание базы, добавление в нее первой строчки с нулевыми значениями и моментальное ее удаление
 db.create_db(function(){
   startServer();
 });
+
+telegram.new_message();
 
 
 // db.insert_from_base();
@@ -70,7 +74,7 @@ function startServer(){
   });
 
   app.get('/2', function(req, res) {
-
+    SaveParsed.auto_scan();
     var file = fs.readFileSync('./views/home.html').toString();
     var first_page = fs.readFileSync('./views/first_page.html').toString();
     file = file.replace('{{Title}}', 'Главная страница');
@@ -81,7 +85,9 @@ function startServer(){
   app.get('/send_url', function(req, res){
     console.log('XMLHttpRequest');
     var new_url = req.query.urle;
-    SaveParsed.saveParsedDb(new_url);
+    SaveParsed.saveParsedDb(new_url, function(stat, vb, row){
+      console.log(stat);
+    });
     var file = fs.readFileSync('./views/home.html').toString();
     var first_page = fs.readFileSync('./views/first_page.html').toString();
     file = file.replace('{{Title}}', 'Главная страница');
@@ -92,7 +98,8 @@ function startServer(){
   app.get('/get_list', function(req, res) {
     db.insert_from_base('off', 'id', '1', function(row){
        res.send(row)
-       console.log(row);
+      //  console.log(row);
+      console.log('Сканировали базу, отправили данные на сайт!');
     });
   });
 

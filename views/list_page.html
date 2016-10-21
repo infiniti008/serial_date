@@ -39,7 +39,7 @@
           {{name}}\
         </div>\
         <div class="div_in_line">\
-          {{next}}\
+          ({{id}}) - {{next}}\
         </div>\
         <div class="div_in_line">\
           {{date}}\
@@ -70,6 +70,7 @@
           newDiv.innerHTML = newDiv.innerHTML.replace('{{next}}', 'S' + arr[i].SerialSeason + 'E' + arr[i].NextEpNumber);
           newDiv.innerHTML = newDiv.innerHTML.replace('{{date}}', arr[i].NextEpDay + '-' + arr[i].NextEpMonth + '-' + arr[i].NextEpYear);
           newDiv.innerHTML = newDiv.innerHTML.replace('{{episode}}', arr[i].NextEpName);
+          newDiv.innerHTML = newDiv.innerHTML.replace('{{id}}', arr[i].id);
           div_add.appendChild(newDiv);
 
 
