@@ -26,7 +26,29 @@ function show_list(msg, match, bot, cb){
 }
 
 
+function show_list_next(msg, match, bot, id, cb){
+  var fromId = msg.from.id;
+  var serial = '/serial_';
+  var serial_current = {};
+  db.insert_from_base_to_telegramm(id, function(row){
+    // console.log(row);
+    var j;
+    if (row.length > 5) {
+      j = 5;
+    }
+    else {
+      j = row.length;
+    }
+    for (var i = 0; i < j; i++) {
+      serial_current[i] = row[i];
+      bot.sendMessage(fromId, serial + i + ' ' + row[i].SerialName);
+    }
+    cb(serial_current);
+  });
+}
+
 
 module.exports = {
   show_list : show_list,
+  show_list_next : show_list_next
 }

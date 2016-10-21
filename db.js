@@ -77,17 +77,17 @@ function insert_from_base(stat, param, znach, cb){
 
 //Извлечение данных из таблицы для телеграмма
 function insert_from_base_to_telegramm(id, cb){
-  var where = 'WHERE rowid = ' + id + ' LIMIT 5';
+  var where = 'WHERE rowid > ' + id + ' LIMIT 5';
   console.log(where);
-    // var sqlite3 = require('sqlite3').verbose();
-    // var data_base = new sqlite3.Database(db_name);
-    // data_base.serialize(function () {
-    //     data_base.all("SELECT rowid AS id, SerialUrl, SerialName, OriginalName, SerialSeason, NextEpNumber, NextEpName, NextEpDay, NextEpMonth, NextEpYear, LastScan FROM nextepisode "+ where +"", function(err, row) {
-    //         cb(row);
-    //         // console.log(row);
-    //     });
-    // });
-    // data_base.close();
+    var sqlite3 = require('sqlite3').verbose();
+    var data_base = new sqlite3.Database(db_name);
+    data_base.serialize(function () {
+        data_base.all("SELECT rowid AS id, SerialUrl, SerialName, OriginalName, SerialSeason, NextEpNumber, NextEpName, NextEpDay, NextEpMonth, NextEpYear, LastScan FROM nextepisode "+ where +"", function(err, row) {
+            cb(row);
+            // console.log(row);
+        });
+    });
+    data_base.close();
 }
 
 

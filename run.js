@@ -13,7 +13,7 @@ db.create_db(function(){
   startServer();
 });
 
-  telegram.new_message();
+telegram.new_message();
 
 
 // db.insert_from_base();
