@@ -1,17 +1,18 @@
 var request = require('request');
 var cheerio = require("cheerio");
 var SaveParsed = require('../SaveParsed.js');
+var n = 10;
 
-parseFrom(function(list){
-  console.log(list[0]);
+parseFrom(n, function(list){
+  console.log(list);
 });
 
-function parseFrom(cb){
+function parseFrom(n, cb){
 	request('http://epscape.com/show', function(error, response, body) {
     if (!error) {
             var $ = cheerio.load(body);
             var serial = [];
-            for (var i = 0; i < 250; i++) {
+            for (var i = 0; i < n; i++) {
               var s = i + 2;
               var ser = {};
               ser.href = '';
@@ -24,7 +25,7 @@ function parseFrom(cb){
               }
               ser.status = $("tr:nth-child(" + s + ") > td.td-show-status").text();
               serial[i] = ser;
-              if (i == 249) {
+              if (i == (n -   1)) {
                 cb(serial);
               }
             }
@@ -33,4 +34,8 @@ function parseFrom(cb){
             console.log("Произошла ошибка: " + error);
         }
 	});
+}
+
+module.exports = {
+  parseFrom : parseFrom
 }

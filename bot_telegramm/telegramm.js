@@ -31,7 +31,7 @@ bot.onText(/\/add/, function (msg, match) {
   add = 1;
   var fromId = msg.from.id;
   console.log('Добавить сериал в базу');
-  bot.sendMessage(fromId, "Отправте мне ссылку на страницу сериала на ресурсе Escape.com \nСсылка должна быть вида 'http://epscape.com/show/Number/SerialName'");
+  bot.sendMessage(fromId, "Отправте мне ссылку на страницу сериала на ресурсе Epscape.com \nСсылка должна быть вида 'http://epscape.com/show/Number/SerialName'");
 });
 
 bot.onText(/http:\/\/epscape.com\/show/, function (msg, match) {
